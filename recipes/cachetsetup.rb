@@ -14,6 +14,14 @@ cookbook_file '/etc/apache2/sites-available/cachet-app.conf' do
   action :create
 end
 
+cookbook_file '/etc/apache2/ports.conf' do
+  source 'ports.conf'
+  owner 'root'
+  group 'root'
+  mode '0644'
+  action :create
+end
+
 # FIXME git: don't get from a public and source.
 # And when that's done we won't need the next few rules.
 execute "cacheclone" do
@@ -65,8 +73,10 @@ end
 execute "enable apache cachet" do
     command <<-EOC
       /usr/sbin/a2ensite cachet-app && \
+      /usr/sbin/a2enmod rewrite && \
       /usr/sbin/service apache2 restart
     EOC
-    not_if { ::File.exist?('/etc/apache2/sites-enabled/cachet-app.conf')  }
+    not_if { ::File.exist?('/etc/apache2/sites-enabled/cachet-app.conf') and
+             ::File.exist?('/etc/apache2/sites-enabled/rewrite.load') }
     action :run
 end
