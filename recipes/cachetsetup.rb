@@ -2,7 +2,7 @@
 # See https://docs.cachethq.io/v1.0/docs/installing-cachet and
 # also http://trevormanternach.com/2015/03/24/installing-cachet/
 
-package php5-mysql do
+package 'php5-mysql' do
     action :install
 end
 
@@ -21,7 +21,7 @@ execute "cacheclone" do
       cd /var/www && \
       /usr/bin/git clone https://github.com/cachethq/Cachet.git && \
       cd Cachet && \
-      /bin/chown www-data:www-data /var/www/Cachet/storage/logs
+      /bin/chown -R www-data:www-data /var/www/Cachet/storage
     EOC
     not_if { ::File.directory?('/var/www/Cachet') }
     action :run
@@ -64,7 +64,7 @@ end
 
 execute "enable apache cachet" do
     command <<-EOC
-      /usr/bin/a2ensite cachet-app && \
+      /usr/sbin/a2ensite cachet-app && \
       /usr/sbin/service apache2 restart
     EOC
     not_if { ::File.exist?('/etc/apache2/sites-enabled/cachet-app.conf')  }
