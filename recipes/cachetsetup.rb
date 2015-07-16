@@ -2,6 +2,10 @@
 # See https://docs.cachethq.io/v1.0/docs/installing-cachet and
 # also http://trevormanternach.com/2015/03/24/installing-cachet/
 
+package php5-mysql do
+    action :install
+end
+
 cookbook_file '/etc/apache2/sites-available/cachet-app.conf' do
   source 'cachet-app.conf'
   owner 'root'
