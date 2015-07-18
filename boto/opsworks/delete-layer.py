@@ -1,14 +1,14 @@
 #!/usr/bin/env python
-import sys
+import os, sys
 from myboto3 import ops_client, stackNames, stackId_from_name, layerId_from_stackId_and_name
 
 if not (1 < len(sys.argv) <= 2):
     print("""usage:
-delete-layer *layerName* [*StackName*]
+%s *layerName* [*StackName*]
 
 Delete OpsWorks layer *layerName in stack *StackName*. If no
 *StackName* is given we use BotoTest
-""")
+""" % os.path.basename(sys.argv[0]))
     sys.exit(1)
 
 layerName = sys.argv[1]

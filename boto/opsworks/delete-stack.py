@@ -4,11 +4,11 @@ from myboto3 import ops_client, stackNames, stackId_from_name
 
 if not (0 < len(sys.argv) <= 2):
     print("""usage:
-delete-stack [*StackName*]
+%s [*StackName*]
 
 Delete OpsWorks stack *StackName*. If no *StackName* is given we use
 BotoTest
-""")
+""" % os.path.basename(sys.argv[0]))
     sys.exit(1)
 
 stackName = 'BotoTest'

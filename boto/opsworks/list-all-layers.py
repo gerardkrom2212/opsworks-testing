@@ -1,15 +1,15 @@
 #!/usr/bin/env python
-import sys
+import os,sys
 from myboto3 import ops_client, stackNames, stackId_from_name
 from myboto3 import layerId_from_stackId_and_name
 
 if not (1 <= len(sys.argv) <= 2):
     print("""usage:
-list-all-layers [*StackName*]
+%s [*StackName*]
 
-liast all OpsWorks layers in stack *StackName*. If no
+list all OpsWorks layers in stack *StackName*. If no
 *StackName* is given we use BotoTest
-""")
+""" % os.path.basename(sys.argv[0]))
     sys.exit(1)
 
 stackName = 'BotoTest'

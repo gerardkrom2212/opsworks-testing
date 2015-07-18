@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import sys
+import os, sys
 import botocore.exceptions
 from myboto3 import ops_client, stackNames, stackId_from_name
 
@@ -66,11 +66,11 @@ def create_db_layer(stackName, client):
 
 if not(1 <= len(sys.argv) <= 2):
     print("""usage:
-create-layers [*StackName*]
+%s [*StackName*]
 
 Create the OpsWorks layers for the php cachet system
 The default stack name is BotoTest.
-""")
+""" % os.path.basename(sys.argv[0]))
     sys.exit(1)
 
 stackName = 'BotoTest'
