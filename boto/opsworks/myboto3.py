@@ -1,7 +1,7 @@
 import boto3
 
 def stackId_from_name(name):
-    stacks = client.describe_stacks()
+    stacks = ops_client.describe_stacks()
     if stacks == None: return None
 
     for stack in stacks['Stacks']:
@@ -10,17 +10,18 @@ def stackId_from_name(name):
     return None
 
 def stackNames():
-    stacks = client.describe_stacks()
+    stacks = ops_client.describe_stacks()
     if stacks == None: return ''
     # from trepan.api import debug; debug()
     return [stack['Name'] for stack in stacks['Stacks']]
 
 def layerId_from_stackId_and_name(stackId, layerName):
-    resp = client.describe_layers(StackId=stackId)
+    resp = ops_client.describe_layers(StackId=stackId)
     for layer in resp['Layers']:
         if layer['Name'] == layerName:
             return layer['LayerId']
     return None
 
 
-client = boto3.client('opsworks')
+ops_client = boto3.client('opsworks')
+elb_client = boto3.client('elb')

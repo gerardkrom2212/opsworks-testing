@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import sys
 import botocore.exceptions
-from myboto3 import client, stackNames, stackId_from_name
+from myboto3 import ops_client, stackNames, stackId_from_name
 
 def create_app_layer(stackName, client):
     stackId = stackId_from_name(stackName)
@@ -51,7 +51,7 @@ def create_db_layer(stackName, client):
                 'MysqlRootPasswordUbiquitous': 'true',
                 },
             CustomRecipes =  {
-                'Setup': ['mash::dbsetup'],
+                'Setup': ['mash::devpkgs', 'mash::dbsetup'],
                 },
 
             )
@@ -65,10 +65,10 @@ def create_db_layer(stackName, client):
     return True
 
 if not(1 <= len(sys.argv) <= 2):
-    print("""Usage:
+    print("""usage:
 create-layers [*StackName*]
 
-Create the Opworks layers for the php cachet system
+Create the OpsWorks layers for the php cachet system
 The default stack name is BotoTest.
 """)
     sys.exit(1)
@@ -80,5 +80,5 @@ if stackName not in stackNames():
     print("Stack %s doesn't exist; nothing done" % stackName)
     sys.exit(2)
 
-create_app_layer(stackName, client)
-create_db_layer(stackName, client)
+create_app_layer(stackName, ops_client)
+create_db_layer(stackName, ops_client)

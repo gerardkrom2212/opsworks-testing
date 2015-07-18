@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import sys
-from myboto3 import client, stackNames, stackId_from_name
+from myboto3 import ops_client, stackNames, stackId_from_name
 
 if not (0 < len(sys.argv) <= 2):
     print("""usage:
@@ -20,5 +20,5 @@ if stackName not in stackNames():
 
 stackId = stackId_from_name(stackName)
 if stackId is not None:
-    result = client.delete_stack(StackId=stackId)
+    result = ops_client.delete_stack(StackId=stackId)
     print(result)

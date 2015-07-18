@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import sys
-from myboto3 import client, stackNames
+from myboto3 import ops_client, stackNames
 
 if not(1 <= len(sys.argv) <= 2):
     print("""Usage:
@@ -18,7 +18,14 @@ if stackName in stackNames():
     print("Stack %s already exists, nothing done" % stackName)
     sys.exit(2)
 
-result = client.create_stack(
+try:
+    sshKey = open("/home/rocky/.ssh/bitbucket4behance", 'r').read()
+except:
+    print("Warning: couldn't read ssh key, using a bogus one")
+    sshKey = 'You need to fix this up'
+
+
+result = ops_client.create_stack(
     # Required parameters
     Name=stackName,
     ServiceRoleArn='arn:aws:iam::587255138864:role/aws-opsworks-service-role',
@@ -37,7 +44,7 @@ result = client.create_stack(
         'Version': '11.10'
         },
     CustomCookbooksSource={
-        # SshKey: os.env['SOMETHING'],
+        'SshKey': sshKey,
         'Type': 'git',
         'Url': 'git@bitbucket.org:rockybernstein/opsworks-testing.git',
         },

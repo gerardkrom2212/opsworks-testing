@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import sys
-from myboto3 import client, stackNames, stackId_from_name, layerId_from_stackId_and_name
+from myboto3 import ops_client, stackNames, stackId_from_name, layerId_from_stackId_and_name
 
 if not (1 < len(sys.argv) <= 2):
     print("""usage:
@@ -30,5 +30,5 @@ if layerId is None:
     sys.exit(4)
 
 print("Layer %s of %s deleted" % (layerName, stackName))
-result = client.delete_layer(LayerId=layerId)
+result = ops_client.delete_layer(LayerId=layerId)
 print(result)

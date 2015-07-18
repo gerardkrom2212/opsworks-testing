@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 import sys
-from myboto3 import ops_client, stackNames, stackId_from_name, layerId_from_stackId_and_name
+from myboto3 import ops_client, stackNames, stackId_from_name
+from myboto3 import layerId_from_stackId_and_name
 
 if not (1 <= len(sys.argv) <= 2):
     print("""usage:
-delete-layers [*StackName*]
+list-all-layers [*StackName*]
 
-Delete all OpsWorks layers in stack *StackName*. If no
+liast all OpsWorks layers in stack *StackName*. If no
 *StackName* is given we use BotoTest
 """)
     sys.exit(1)
@@ -24,10 +25,4 @@ if stackId is None:
     sys.exit(3)
 
 resp = ops_client.describe_layers(StackId=stackId)
-count = 0
-for layer in resp['Layers']:
-    count += 1
-    result = ops_client.delete_layer(LayerId=layer['LayerId'])
-    print("Layer %s of %s deleted" % (layer['Name'], stackName))
-    print(result)
-print("Total of %d layer(s) deleted" % count)
+print ', '.join([layer['Name'] for layer in resp['Layers']])

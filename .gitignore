@@ -4,6 +4,7 @@
 \#*#
 .*.sw[a-z]
 *.un~
+*.pyc
 pkg/
 
 # Berkshelf
