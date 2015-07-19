@@ -2,6 +2,8 @@
 [
     %w(../list-all-stacks.py),
     %w(../list-all-stacks.py a bogus),
+    %w(../list-stack-instances.py BotoTest),
+    %w(../list-stack-instances.py bogus),
     %w(../create-stack.py t1),
     %w(../create-stack.py t1 a bogus),
     %w(../create-all-layers.py t1),
@@ -13,4 +15,5 @@
 ].each do |cmd|
     puts cmd.join(', ')
     system(*cmd)
+    puts '-' * 40
 end

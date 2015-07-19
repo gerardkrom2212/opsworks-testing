@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import os, sys
 from myboto3 import ops_client, stackNames, stackId_from_name
+from myboto3 import instanceIds_from_stack
 
 stackName = 'BotoTest'
 if not (0 < len(sys.argv) <= 2):
@@ -14,11 +15,10 @@ Delete OpsWorks stack *StackName*. If no *StackName* is given we use
 
 if len(sys.argv) == 2: stackName = sys.argv[1]
 
-if stackName not in stackNames():
-    print("Stack %s doesn't exists, nothing done" % stackName)
+stackId = stackId_from_name(stackName)
+if stackId is None:
+    print("Cant find Stack %s" % stackName)
     sys.exit(2)
 
-stackId = stackId_from_name(stackName)
-if stackId is not None:
-    result = ops_client.delete_stack(StackId=stackId)
-    print(result)
+result = ops_client.delete_stack(StackId=stackId)
+print(result)

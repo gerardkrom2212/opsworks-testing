@@ -15,9 +15,9 @@ def register_app_instance(instanceId, elb_client,
     return
 
 layerName = 'PHP App Servers'
-for i in range(1,1):
-    hostname = 'cachet_app%d' % i
-    ec2InstanceId = instanceId_from_hostname(host_name, layerName)
-if ec2InstanceId is not None:
-    register_app_instance(ec2InstanceId, elb_client)
-    print("Registered %s in load balancer" % ec2InstanceId)
+for i in range(1,4):
+    hostname = 'cachet-app%d' % i
+    ec2InstanceId = instanceId_from_hostname(hostname, layerName)
+    if ec2InstanceId is not None:
+        register_app_instance(ec2InstanceId, elb_client)
+        print("Registered %s in load balancer" % ec2InstanceId)

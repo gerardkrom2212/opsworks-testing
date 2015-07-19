@@ -1,17 +1,20 @@
 #!/usr/bin/env python
 import os, sys
-from myboto3 import instanceId_from_hostname
+from myboto3 import instanceId_from_hostname_and_stack
 
-if len(sys.argv) != 3:
-    print("""usage: %s *hostname* *layer-name*
+if not (2 <= len(sys.argv) <= 3):
+    print("""usage: %s *hostname* [*stackname*]
 
-Get an ec2-instance id from a hostname
+Get an ec2-instance id from a hostname. If stackname is given,
+narrow host to hosts in that stack.
 """ % os.path.basename(sys.argv[0]))
     sys.exit(1)
 
-host_name, layerName  = sys.argv[1:]
-ec2InstanceId = instanceId_from_hostname(host_name, layerName)
+hostname = sys.argv[1]
+stackName=None
+if len(sys.argv) == 3: stackName = sys.argv[2]
+ec2InstanceId = instanceId_from_hostname_and_stack(hostname, stackName)
 if ec2InstanceId is not None:
-    print("Host %s has instance id %s" % (host_name, ec2InstanceId))
+    print("Host %s has instance id %s" % (hostname, ec2InstanceId))
 else:
-    print("Cant find instance id for host %s in layer %s" % (host_name, layerName))
+    print("Cant find instance id for host %s" % host_name)

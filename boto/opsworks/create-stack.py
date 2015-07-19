@@ -42,9 +42,9 @@ result = ops_client.create_stack(
         'Version': '11.10'
         },
     CustomCookbooksSource={
-        'SshKey': sshKey,
+        # 'SshKey': sshKey,
         'Type': 'git',
-        'Url': 'git@bitbucket.org:rockybernstein/opsworks-testing.git',
+        'Url': 'https://github.com/rocky/opsworks-testing.git',
         },
     DefaultAvailabilityZone='us-east-1a',
     DefaultOs='Ubuntu 14.04 LTS',

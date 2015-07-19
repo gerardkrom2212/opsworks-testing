@@ -9,7 +9,7 @@ LAST_DB_NUM = 1
 
 def create_db_instance(stackName, client, layerName='MySQL DB',
                         hostname=None):
-    global LAST_APP_NUM
+    global LAST_DB_NUM
     stackId = stackId_from_name(stackName)
     if stackId is None:
         print("Can't find stack %s; nothing done" % stackName)
@@ -21,7 +21,7 @@ def create_db_instance(stackName, client, layerName='MySQL DB',
               (layerName, stackName))
         return False
 
-    host_name = 'db-master%d' % LAST_APP_NUM
+    host_name = 'db-master%d' % LAST_DB_NUM
     try:
         result = client.create_instance(
 
@@ -35,7 +35,7 @@ def create_db_instance(stackName, client, layerName='MySQL DB',
                   # SshKeyName='string',
                   Architecture = 'x86_64',
                   )
-        LAST_APP_NUM += 1
+        LAST_DB_NUM += 1
         print("instance in layer %s of stack %s created" %
               (layerName, stackName))
         print(result)

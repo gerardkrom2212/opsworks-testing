@@ -4,7 +4,6 @@ import botocore.exceptions
 from myboto3 import ops_client, elb_client, ec2_client
 from myboto3 import stackNames, stackId_from_name
 from myboto3 import layerId_from_stackId_and_name
-from myboto3 import instanceId_from_hostname
 
 LAST_APP_NUM = 1
 
