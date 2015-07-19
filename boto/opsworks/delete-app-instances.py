@@ -1,11 +1,19 @@
 #!/usr/bin/env python
 import os, sys
 import botocore.exceptions
-from myboto3 import ops_client, stackNames, stackId_from_name
+from myboto3 import ops_client, elb_client, stackNames, stackId_from_name
 from myboto3 import layerId_from_stackId_and_name
 
 LAST_APP_NUM = 1
 LAST_DB_NUM = 1
+
+def register_app_instance(instanceId, elb_client,
+                          lbName='CachetLoadBalancer'):
+    response = elb_client.register_instances_with_load_balancer(
+        LoadBalancerName=lbname,
+        Instances[{'instanceId': instanceId}])
+    print(response)
+    return
 
 def create_app_instance(stackName, client, layerName='PHP App Servers',
                         hostname=None):
@@ -36,8 +44,10 @@ def create_app_instance(stackName, client, layerName='PHP App Servers',
                   Architecture = 'x86_64',
                   )
         LAST_APP_NUM += 1
-        print("instance in layer %s of stack %s created" %
-              (layerName, stackName))
+        instanceId = result['InstanceId']
+        print("instance %s in layer %s of stack %s created" %
+              (instanceId, layerName, stackName))
+        register_app_instance(instanceId, elb_client)
         print(result)
     except botocore.exceptions.ClientError as e:
         print e

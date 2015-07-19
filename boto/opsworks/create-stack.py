@@ -1,17 +1,15 @@
 #!/usr/bin/env python
-import sys
+import os, sys
 from myboto3 import ops_client, stackNames
 
+stackName = 'BotoTest'
 if not(1 <= len(sys.argv) <= 2):
-    print("""Usage:
-create-stack [*StackName*]
+    print("""usage: %s [*StackName*]
 
 Create Opworks stack for php cachet test application.
-The default stack is BotoTest
-""")
+The default stack is %s.""" % (os.path.basename(sys.argv[0]), stackName))
     sys.exit(1)
 
-stackName = 'BotoTest'
 if len(sys.argv) == 2: stackName = sys.argv[1]
 
 if stackName in stackNames():

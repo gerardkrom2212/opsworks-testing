@@ -2,6 +2,7 @@
 import os, sys
 import botocore.exceptions
 from myboto3 import ops_client, stackNames, stackId_from_name
+from myboto3 import instananceId_from_hostname
 
 def create_app_layer(stackName, client):
     stackId = stackId_from_name(stackName)
