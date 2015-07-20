@@ -42,7 +42,14 @@ def lbNames():
 # ======== Instances ==========
 
 def instanceId_from_hostname_and_stack(hostname, stackName=None):
-    """Return a single ec2 instance whos hostname is *hostname*.
+    """Return a single ec2 instance whose hostname is *hostname*.
+    If stackName not given, limit the host to that Opsworks stack.
+    """
+    instances = instances_from_hostname_and_stack(hostname, stackName)
+    return instances[0]['InstanceId']
+
+def instances_from_hostname_and_stack(hostname, stackName=None):
+    """Return a  ec2 instances whose hostname is *hostname*.
     If stackName not given, limit the host to that Opsworks stack.
     """
     instances = []
@@ -63,16 +70,17 @@ def instanceId_from_hostname_and_stack(hostname, stackName=None):
         pass
 
     if stackName is not None:
+        new_instances = []
         for instance in instances:
             tags = instance['Tags']
             for tag in tags:
                 if tag['Key'] == 'opsworks:stack' and tag['Value'] == stackName:
-                    return instance['InstanceId']
+                    new_instances.append(instance)
                 pass
             pass
-        pass
+        return new_instances
     else:
-        return instances[0]['InstanceId']
+        return instances
     return None
 
 
