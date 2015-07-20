@@ -6,7 +6,7 @@ stackName = 'BotoTest'
 if not (1 <= len(sys.argv) <= 2):
     print("""usage: %s [*stackname*]
 
-Stops all instances in *stackname*.
+Starts all instances in *stackname*.
 If *stackname* is not given, we use BotoTest.
 """ % os.path.basename(sys.argv[0]))
     sys.exit(1)
@@ -18,5 +18,5 @@ if stackId is None:
     print("Can't find stack %s" % stackName)
     sys.exit(2)
 
-result = ops_client.stop_stack(StackId=stackId)
+result = ops_client.start_stack(StackId=stackId)
 print(result)
