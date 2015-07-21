@@ -1,0 +1,17 @@
+#!/bin/sh
+# Another small hack from rocky.
+[ $# -ne 1 ] && echo "
+  Usage: `basename $0` title
+
+  Sends the xterm command sequence to set the xterm resource name.
+  
+  An X name = window title + iconname. So...
+  xtermtitle cpu10.bl1.xterm   is like
+  xterm -name cpu10.bl1.xterm   except...
+  this program assumes xterm is already running.
+
+  Note: to embed blanks in the title, you may have to enclose the
+  argument in some sort of quotes or escape the blanks.
+" && exit 1
+printf "\033]0;%s\07" "$1"
+exit 0

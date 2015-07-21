@@ -1,2 +1,2 @@
 # coding: utf-8
-source "https://github.com/rocky/aws-testing.git"
+source "https://github.com/rocky/opsworks-testing.git"
